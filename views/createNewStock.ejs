@@ -1,0 +1,122 @@
+<%- include('header') -%>
+<%- include('dashboard') -%>
+    <div class="top new-stock-container">
+        <h4>Add New Stock</h4>
+        <form method="POST" action="/route/api/medical/stocks">
+            <div class="add-stock-container">
+                <div class="form-inline">
+                    <b for="item_name">Item Name:</b>
+                    <input type="text" id="item_name" name="item_name" class="form-control" spellcheck="false" autocomplete="off" pattern=".{0,50}" oninvalid="InvalidItemName(this);" oninput="InvalidItemName(this);" required="required">
+                    <b for="manufacturer_name">Manufacturer Name:</b>
+                    <input type="text" id="manufacturer_name" name="manufacturer_name" class="form-control" list="manufacturerList" spellcheck="false" autocomplete="off" pattern="[a-zA-Z!@#$%^&*''-\/,.~\s]{0,50}" oninvalid="InvalidManufactName(this);" oninput="InvalidManufactName(this);" required="required">
+                    <datalist id="manufacturerList">
+                        <!-- <% for(var i=0; i<getCompany.length; i++) { %>
+                            <option value=<%= getCompany[i].company_name %>>
+                        <% } %> -->
+                        <% for(var i=0; i<getCompany.length; i++) { %>
+                            <option value="<%= getCompany[i].manufacturer_name %>"><%= getCompany[i].manufacturer_name %></option>
+                        <% } %>
+                    </datalist>
+                </div>
+                <div class="form-inline">
+                    <b for="item_detail">Item Description:</b>
+                    <input type="text" id="item_detail" name="item_detail" class="form-control" spellcheck="false" autocomplete="off" pattern=".{0,300}" oninvalid="InvalidItemDesc(this);" oninput="InvalidItemDesc(this);" required="required">
+                    <b for="supplier_name">Supplier Name:</b>
+                    <input type="text" id="supplier_name" name="supplier_name" class="form-control" spellcheck="false" autocomplete="off" pattern="[a-zA-Z!@#$%^&*''-\/,.~\s]{0,50}" oninvalid="InvalidVendorName(this);" oninput="InvalidVendorName(this);" required="required">
+                </div>
+                <div class="form-inline">
+                    <b for="unit_price">Unit Price:</b>
+                    <input type="text" id="unit_price" name="unit_price" class="form-control" spellcheck="false" autocomplete="off" pattern="[a-zA-Z0-9.\s]{0,20}" oninvalid="InvalidUnitPrice(this);" oninput="InvalidUnitPrice(this);" required="required">
+
+                    <b for="location">Location:</b>
+                    <input type="text" id="location" name="location" class="form-control" spellcheck="false" autocomplete="off" pattern="[a-zA-Z\s]{0,30}" oninvalid="InvalidLocation(this);" oninput="InvalidLocation(this);" required="required">
+                </div>
+                <div class="form-inline">
+                    <b for="quantity">Quantity:</b>
+                    <input type="text" id="quantity" name="quantity" class="form-control" spellcheck="false" autocomplete="off" pattern="[0-9]{0,5}" oninvalid="InvalidQuantity(this);" oninput="InvalidQuantity(this);" required="required">
+                    <b for="purchase_date">Purchase Date:</b>
+                    <input type="date" id="date" name="purchase_date" value="<%= new Date().toISOString().split('T')[0] %>" class="form-control" spellcheck="false" autocomplete="off" readonly>
+                </div>
+                <div class="form-inline">
+                    <b for="expiry_date">Expiry Date:</b>
+                    <input type="date" id="date" name="expiry_date" value="<%= new Date().toISOString().split('T')[0] %>" class="form-control" spellcheck="false" autocomplete="off" required>
+                </div>
+                <div class="form-inline">
+                    <button type="submit" class="btn btn-success rounded-pill">Add Stock</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        function InvalidItemName(textbox) {
+            if (textbox.value === '') {
+                textbox.setCustomValidity('Please enter the Item Name.');
+            }else if (textbox.validity.patternMismatch) {
+                textbox.setCustomValidity('Please enter the valid Item Name within 50 characters.');
+            }else{
+                textbox.setCustomValidity('');
+            }
+            return true;
+        } 
+        function InvalidManufactName(textbox) {
+            if (textbox.value === '') {
+                textbox.setCustomValidity('Please enter the Manufacturer Name.');
+            }else if (textbox.validity.patternMismatch) {
+                textbox.setCustomValidity('Please enter the valid Manufacturer Name within 50 characters.');
+            }else{
+                textbox.setCustomValidity('');
+            }
+            return true;
+        }  
+        function InvalidItemDesc(textbox) {
+            if (textbox.value === '') {
+                textbox.setCustomValidity('Please enter the Item Description.');
+            }else if (textbox.validity.patternMismatch) {
+                textbox.setCustomValidity('Please enter the valid Item Description within 300 characters.');
+            }else{
+                textbox.setCustomValidity('');
+            }
+            return true;
+        }  
+        function InvalidVendorName(textbox) {
+            if (textbox.value === '') {
+                textbox.setCustomValidity('Please enter the Supplier Name.');
+            }else if (textbox.validity.patternMismatch) {
+                textbox.setCustomValidity('Please enter the valid Supplier Name within 50 characters.');
+            }else{
+                textbox.setCustomValidity('');
+            }
+            return true;
+        }  
+        function InvalidUnitPrice(textbox) {
+            if (textbox.value === '') {
+                textbox.setCustomValidity('Please enter the Unit Price.');
+            }else if (textbox.validity.patternMismatch) {
+                textbox.setCustomValidity('Please enter the valid Unit Price within 20 characters.');
+            }else{
+                textbox.setCustomValidity('');
+            }
+            return true;
+        }  
+        function InvalidLocation(textbox) {
+            if (textbox.value === '') {
+                textbox.setCustomValidity('Please enter the Location.');
+            }else if (textbox.validity.patternMismatch) {
+                textbox.setCustomValidity('Please enter the valid Location within 30 characters.');
+            }else{
+                textbox.setCustomValidity('');
+            }
+            return true;
+        }         
+        function InvalidQuantity(textbox) {
+            if (textbox.value === '') {
+                textbox.setCustomValidity('Please enter the Quantity.');
+            }else if (textbox.validity.patternMismatch) {
+                textbox.setCustomValidity('Please enter the valid Quantity within 5 characters.');
+            }else{
+                textbox.setCustomValidity('');
+            }
+            return true;
+        }  
+    </script>
+<%- include('footer') -%>
